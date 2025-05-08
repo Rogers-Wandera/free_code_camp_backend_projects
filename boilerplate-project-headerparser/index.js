@@ -14,14 +14,22 @@ app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 2
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static("public"));
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
+
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
 // your first API endpoint...
-app.get("/api/hello", function (req, res) {
-  res.json({ greeting: "hello API" });
+app.get("/api/whoami", (req, res) => {
+  const ip = req.ip;
+  const preferedLanguage = req.headers["accept-language"];
+  const software = req.headers["user-agent"];
+  res.json({ ipaddress: ip, language: preferedLanguage, software: software });
 });
 
 // listen for requests :)
