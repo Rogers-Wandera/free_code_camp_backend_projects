@@ -35,8 +35,8 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/api/users/:id", (req, res) => {
-  const user = User.findById(req.params.id);
+app.get("/api/users/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
   if (!user) {
     return res.json({ error: "No user found" });
   }
