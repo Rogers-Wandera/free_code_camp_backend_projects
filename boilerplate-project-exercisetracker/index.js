@@ -77,7 +77,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
     if (!date) {
       date = new Date();
     }
-    const exercise = { description, duration: Number(duration), date };
+    const exercise = { description, duration: parseInt(duration), date };
     userExists.log.push(exercise);
     userExists.count += 1;
     await userExists.save();
@@ -86,7 +86,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
       _id,
       username: userExists.username,
       description,
-      duration: Number(duration),
+      duration: parseInt(duration),
       date: new Date(date).toDateString(),
     });
   } catch (err) {
